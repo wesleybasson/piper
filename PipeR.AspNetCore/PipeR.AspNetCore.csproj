@@ -10,8 +10,8 @@
     <Company>Litheon</Company>
     <PackageTags>aspnetcore;pipeline;middleware;piper</PackageTags>
     <Description>ASP.NET Core integration for PipeR (endpoint valves and middleware).</Description>
-    <RepositoryUrl>https://github.com/wesleybasson/piperaspnetcore</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/wesleybasson/piperaspnetcore</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/wesleybasson/piper</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/wesleybasson/piper</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
@@ -29,7 +29,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Routing.Abstractions" Version="2.3.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.7" />
-    <PackageReference Include="PipeR.Core" Version="*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PipeR.Core\PipeR.Core.csproj" />
   </ItemGroup>
 
 </Project>

@@ -10,8 +10,8 @@
     <Company>Litheon</Company>
     <PackageTags>pipeline;middleware;piper</PackageTags>
     <Description>Lightweight mediator and pipeline core for .NET.</Description>
-    <RepositoryUrl>https://github.com/wesleybasson/pipernet</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/wesleybasson/pipernet</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/wesleybasson/piper</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/wesleybasson/piper</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
