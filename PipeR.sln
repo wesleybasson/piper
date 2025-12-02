@@ -1,11 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36301.6
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11222.15 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PipeR.Core", "PipeR.Core\PipeR.Core.csproj", "{F52CB29C-5607-41CF-A374-5045F9CB126C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PipeR.AspNetCore", "PipeR.AspNetCore\PipeR.AspNetCore.csproj", "{EE9BAF87-3A53-0087-6189-117B2B8C4EBD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PipeR.Core.Tests", "tests\PipeR.Core.Tests\PipeR.Core.Tests.csproj", "{819A3487-DE86-4ADE-AD27-1DFECF647BC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PipeR.AspNetCore.Tests", "tests\PipeR.AspNetCore.Tests\PipeR.AspNetCore.Tests.csproj", "{1C51E3AD-7F11-41B3-AA28-3AE61CB937BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PipeR.IntegrationTests", "tests\PipeR.IntegrationTests\PipeR.IntegrationTests.csproj", "{FDA053D3-7856-4A5E-AEC7-FCB4BAA8F3DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PipeR.Benchmarks", "tests\PipeR.Benchmarks\PipeR.Benchmarks.csproj", "{F9D6940C-5CAC-4A3C-9974-9253AC461534}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +29,22 @@ Global
 		{EE9BAF87-3A53-0087-6189-117B2B8C4EBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE9BAF87-3A53-0087-6189-117B2B8C4EBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE9BAF87-3A53-0087-6189-117B2B8C4EBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{819A3487-DE86-4ADE-AD27-1DFECF647BC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{819A3487-DE86-4ADE-AD27-1DFECF647BC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{819A3487-DE86-4ADE-AD27-1DFECF647BC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{819A3487-DE86-4ADE-AD27-1DFECF647BC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C51E3AD-7F11-41B3-AA28-3AE61CB937BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C51E3AD-7F11-41B3-AA28-3AE61CB937BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C51E3AD-7F11-41B3-AA28-3AE61CB937BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C51E3AD-7F11-41B3-AA28-3AE61CB937BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDA053D3-7856-4A5E-AEC7-FCB4BAA8F3DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDA053D3-7856-4A5E-AEC7-FCB4BAA8F3DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDA053D3-7856-4A5E-AEC7-FCB4BAA8F3DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDA053D3-7856-4A5E-AEC7-FCB4BAA8F3DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9D6940C-5CAC-4A3C-9974-9253AC461534}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9D6940C-5CAC-4A3C-9974-9253AC461534}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9D6940C-5CAC-4A3C-9974-9253AC461534}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9D6940C-5CAC-4A3C-9974-9253AC461534}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

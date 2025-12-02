@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" Version="0.15.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.DiagnosticsHub.BenchmarkDotNetDiagnosers" Version="18.0.36313.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\PipeR.AspNetCore\PipeR.AspNetCore.csproj" />
+    <ProjectReference Include="..\..\PipeR.Core\PipeR.Core.csproj" />
+    <ProjectReference Include="..\PipeR.IntegrationTests\PipeR.IntegrationTests.csproj" />
+  </ItemGroup>
+</Project>
