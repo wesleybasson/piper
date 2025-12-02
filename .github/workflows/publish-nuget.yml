@@ -1,0 +1,44 @@
+name: Publish NuGet packages
+
+on:
+  pull_request:
+    types: [closed]
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main') }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # For merged PR events build the current main branch to ensure we package what is actually on main.
+          ref: 'refs/heads/main'
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build -c Release --no-restore
+
+      - name: Pack projects
+        run: |
+          VERSION="0.0.${GITHUB_RUN_NUMBER}-ci"
+          echo "Packing version: $VERSION"
+          dotnet pack ./PipeR.Core/PipeR.Core.csproj -c Release -o artifacts /p:PackageVersion=$VERSION
+          dotnet pack ./PipeR.AspNetCore/PipeR.AspNetCore.csproj -c Release -o artifacts /p:PackageVersion=$VERSION
+
+      - name: Push packages to NuGet.org
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: |
+          if [ -z "$NUGET_API_KEY" ]; then
+            echo "NUGET_API_KEY not set; aborting push"; exit 1
+          fi
+          dotnet nuget push "artifacts/*.nupkg" -s https://api.nuget.org/v3/index.json -k $NUGET_API_KEY --skip-duplicate

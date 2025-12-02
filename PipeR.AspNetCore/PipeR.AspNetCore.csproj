@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>PipeR.AspNetCore</PackageId>
+    <Authors>Wesley Basson</Authors>
+    <Company>Litheon</Company>
+    <PackageTags>aspnetcore;pipeline;middleware;piper</PackageTags>
+    <Description>ASP.NET Core integration for PipeR (endpoint valves and middleware).</Description>
+    <RepositoryUrl>https://github.com/wesleybasson/piperaspnetcore</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/wesleybasson/piperaspnetcore</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Attributes\" />
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Routing.Abstractions" Version="2.3.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.7" />
+    <PackageReference Include="PipeR.Core" Version="*" />
+  </ItemGroup>
+
+</Project>

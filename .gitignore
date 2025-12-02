@@ -1,0 +1,136 @@
+## ============================================
+##  .gitignore for C# Libraries (.NET Standard / .NET Core / .NET)
+##  Includes: VS, VSCode, Rider, NuGet, Test, Build, Coverage
+## ============================================
+
+# --- Core build outputs ---
+bin/
+obj/
+out/
+artifacts/
+Debug/
+Release/
+
+# --- .NET intermediate assets ---
+*.dll
+*.exe
+*.pdb
+*.mdb
+*.cache
+*.config
+*.json.user
+*.manifest
+
+# --- NuGet ---
+*.nupkg
+*.snupkg
+*.nuspec
+.nuget/
+packages/
+# Allow package references, but ignore local caches:
+!**/packages/*/build/
+!**/packages/*/buildMultiTargeting/
+!**/packages/*/buildTransitive/
+
+# --- .NET User Secrets ---
+secrets.json
+**/secrets.json
+
+# --- Global .NET CLI artifacts ---
+.project
+global.json.user
+.dotnet/
+
+# --- Visual Studio specific ---
+.vs/
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+*.cache
+ipch/
+Generated\ Files/
+
+# --- Visual Studio Code ---
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# --- JetBrains Rider ---
+.idea/
+.idea/
+*.sln.iml
+
+# --- ReSharper / Rider files ---
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+*.DotSettings
+/.idea/.idea.<SolutionName>.dir/
+
+# --- MSBuild logs ---
+msbuild.log
+msbuild.err
+msbuild.wrn
+
+# --- Test results & coverage ---
+TestResult*/
+TestResults/
+*.coverage
+*.coveragexml
+*.cov
+coverage-report/
+coverage/
+.coverage/
+.nCrunch_*/
+*.ncrunchsolution
+*.ncrunchproject
+_Reports/
+*.sarif
+
+# --- BenchmarkDotNet ---
+BenchmarkDotNet.Artifacts/
+
+# --- Entity Framework Core ---
+Migrations/obj/
+Migrations/bin/
+
+# --- Logs ---
+*.log
+logs/
+
+# --- Temporary files ---
+*.tmp
+*.temp
+*.bak
+*.old
+*.orig
+*.swp
+*.swo
+*.DS_Store
+Thumbs.db
+
+# --- Rider-generated data ---
+.idea/
+*.DotSettings.user
+
+# --- Build Cache ---
+/.cache/
+/dist/
+
+# --- Azure DevOps pipeline artifacts ---
+/azure-pipelines.yml.user
+/.azuredevops/
+
+# --- Docker ---
+docker-compose.override.yml
+**/.dockerignore
+**/Dockerfile.local
+**/Dockerfile.dev
+
+# --- Secrets / Keys (if any) ---
+*.key
+*.pem
+*.pfx

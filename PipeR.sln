@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36301.6
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PipeR.Core", "PipeR.Core\PipeR.Core.csproj", "{F52CB29C-5607-41CF-A374-5045F9CB126C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PipeR.AspNetCore", "PipeR.AspNetCore\PipeR.AspNetCore.csproj", "{EE9BAF87-3A53-0087-6189-117B2B8C4EBD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F52CB29C-5607-41CF-A374-5045F9CB126C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F52CB29C-5607-41CF-A374-5045F9CB126C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F52CB29C-5607-41CF-A374-5045F9CB126C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F52CB29C-5607-41CF-A374-5045F9CB126C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE9BAF87-3A53-0087-6189-117B2B8C4EBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE9BAF87-3A53-0087-6189-117B2B8C4EBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE9BAF87-3A53-0087-6189-117B2B8C4EBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE9BAF87-3A53-0087-6189-117B2B8C4EBD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B27DF7A6-B116-41AA-9C2B-D592239EEF21}
+	EndGlobalSection
+EndGlobal
