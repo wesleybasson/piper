@@ -14,6 +14,7 @@
     <PackageProjectUrl>https://github.com/wesleybasson/piper</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>piper.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -38,6 +39,16 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PipeR.Core\PipeR.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="piper.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="piper.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
 </Project>
