@@ -167,3 +167,82 @@ dotnet run -c Release
 
 **License**
 - This project is available under the terms of the `MIT` license. See `LICENSE`.
+
+### Versioning and Release Process
+
+**PipeR** uses **Semantic Versioning (SemVer)** and **Conventional Commit-based rules** to automatically determine the next NuGet package version whenever changes are merged from `main` into `release/main`.
+
+Releases are **fully automated**:
+1. Changes are merged into `main`
+2. A PR from `main -> release/main` is created and merged
+3. GitHub Actions calculates the next version based on commit messages
+4. A new tag is created (`vX.Y.Z`)
+5. NuGet packages are built and published automatically
+
+#### How Versioning Works
+
+**Version format**
+```pwsh
+MAJOR.MINOR.PATCH
+```
+
+**Version bump rules (automated)**
+| Bump Type | Triggered When...             | Example Commit Messages                                                                                           |   |   |
+|-----------|-------------------------------|-------------------------------------------------------------------------------------------------------------------|---|---|
+| MAJOR     | A breaking change is detected | `feat!: change valve signature` `refactor!: adjust pipeline builder API` Commit body contains: `BREAKING CHANGE:` |   |   |
+| MINOR     | A new feature is added        | `feat: add inline valve support` `feat(core): improve request handler delegation`                                 |   |   |
+| PATCH     | Any other change (default)    | `fix: correct pipeline ordering` `refactor: tidy builder logic` `chore: update dependencies`                      |   |   |
+
+**Rule precedence**
+If multiple commits are processed in a release:
+1. If ANY commit indicates **breaking change** -> MAJOR
+2. Else if ANY commit is a **feat:** -> MINOR
+3. ELSE -> PATCH
+This ensures releases reflect the most significant change.
+
+#### Commit Message Guidelines
+**PipeR** follows the **Conventional Commits** specification with a few enhancements for API safety.
+
+**Commit structure**
+```pwsh
+<type>[optional scope][!]: <decription>
+
+[optional body]
+[optional footer(s)]
+```
+
+**Allowed types**
+- `feat` - new feature (MINOR bump)
+- `fix` - bugfix (PATCH bump)
+- `refactor` - code restructuring (PATCH)
+- `chore` - housekeeping (PATCH)
+- `docs` - documentation only (PATCH)
+- `test` - test-only changes (PATCH)
+- `perf` - performance improvements (PATCH)
+
+**Example commits**
+
+Minor bump (feature)
+```pwsh
+feat: add support for inline middleware valves
+```
+Major bump (breaking API change)
+```pwsh
+BREAKING CHANGE: All custom valves must now return Task<Response>.
+```
+Patch bump
+```pwsh
+fix: ensure handler delegate is invoked only once
+```
+
+#### Release Workflow Summary
+When a PR is merged into `release/main`, the automated workflow will:
+1. Fetch the latest version tag (`vX.Y.Z`)
+2. Collect all commits since that tag
+3. Apply version bump rules
+4. Create a new tag (e.g. `v1.4.0`)
+5. Pack and publish all **PipeR** NuGet packages:
+   - `PipeR.Core`
+   - `PipeR.Extensions.AspNetCore`
+You do not need to manually create tags.
+The workflow owns the entire release cycle.

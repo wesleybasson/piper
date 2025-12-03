@@ -1,0 +1,124 @@
+name: Publish NuGet Release
+
+on:
+  push:
+    branches:
+      - release/main
+
+permissions:
+  contents: write   # Needed to push tags
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # Needed to retrieve previous tags
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Determine next version (semantic)
+        id: version
+        run: |
+          # Get latest tag that looks like vX.Y.Z, or empty if none
+          LAST_TAG=$(git describe --tags --match "v*" --abbrev=0 2>/dev/null || echo "")
+
+          if [ -z "$LAST_TAG" ]; then
+            echo "No previous tag found. Starting at 0.1.0 (initial minor release)."
+            BASE_VERSION="0.1.0"
+            echo "VERSION=$BASE_VERSION" >> $GITHUB_ENV
+            echo "BUMP=minor" >> $GITHUB_ENV
+            exit 0
+          fi
+
+          echo "Latest tag: $LAST_TAG"
+
+          # Collect commit messages since the last tag
+          RANGE="${LAST_TAG}..HEAD"
+          COMMITS=$(git log $RANGE --pretty=%B)
+
+          echo "Commits since $LAST_TAG:"
+          echo "$COMMITS"
+
+          BUMP="patch"
+
+          # Major: BREAKING CHANGE or '!' before colon in header
+          if echo "$COMMITS" | grep -qE "BREAKING[ -]CHANGE"; then
+            BUMP="major"
+          elif echo "$COMMITS" | grep -qE "^[a-zA-Z]+!:"; then
+            BUMP="major"
+          # Minor: feat / feat(scope):
+          elif echo "$COMMITS" | grep -qE "^feat(\(.+\))?: "; then
+            BUMP="minor"
+          fi
+
+          echo "Calculated bump level: $BUMP"
+
+          # Strip leading 'v' from tag to get X.Y.Z
+          VERSION=${LAST_TAG#v}
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
+
+          case "$BUMP" in
+            major)
+              MAJOR=$((MAJOR + 1))
+              MINOR=0
+              PATCH=0
+              ;;
+            minor)
+              MINOR=$((MINOR + 1))
+              PATCH=0
+              ;;
+            patch)
+              PATCH=$((PATCH + 1))
+              ;;
+          esac
+
+          NEW_VERSION="$MAJOR.$MINOR.$PATCH"
+          echo "Resolved next version: $NEW_VERSION"
+
+          echo "VERSION=$NEW_VERSION" >> $GITHUB_ENV
+          echo "BUMP=$BUMP" >> $GITHUB_ENV
+
+      - name: Create and push release tag
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+
+          NEW_TAG="v${{ env.VERSION }}"
+          echo "Creating tag: $NEW_TAG"
+
+          git tag "$NEW_TAG"
+          git push origin "$NEW_TAG"
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build -c Release --no-restore
+
+      - name: Pack projects
+        run: |
+          dotnet pack ./PipeR.Core/PipeR.Core.csproj \
+            -c Release \
+            -p:PackageVersion=${{ env.VERSION }} \
+            --no-build -o ./artifacts
+
+          dotnet pack ./PipeR.AspNetCore/PipeR.AspNetCore.csproj \
+            -c Release \
+            -p:PackageVersion=${{ env.VERSION }} \
+            --no-build -o ./artifacts
+
+      - name: Push to NuGet
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: |
+          dotnet nuget push "./artifacts/*.nupkg" \
+            -s https://api.nuget.org/v3/index.json \
+            -k "$NUGET_API_KEY" \
+            --skip-duplicate
