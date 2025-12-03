@@ -17,7 +17,7 @@ public class PipelineBuilderTests
         builder.Use(async (req, next, ct) =>
         {
             log.Add("A");
-            var result = await next();
+            var result = await next(req, ct);
             log.Add("A-end");
             return result;
         });
@@ -25,7 +25,7 @@ public class PipelineBuilderTests
         builder.Use(async (req, next, ct) =>
         {
             log.Add("B");
-            var result = await next();
+            var result = await next(req, ct);
             log.Add("B-end");
             return result;
         });
@@ -62,7 +62,7 @@ public class PipelineBuilderTests
         builder.Use((req, next, ct) =>
         {
             valveCalled = true;
-            return next();
+            return next(req, ct);
         });
 
         await builder.ExecuteAsync(new DummyRequest());
@@ -81,7 +81,7 @@ public class PipelineBuilderTests
         builder.Use((req, next, ct) =>
         {
             received = ct;
-            return next();
+            return next(req, ct);
         });
 
         using var cts = new CancellationTokenSource();

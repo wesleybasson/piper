@@ -85,16 +85,14 @@ public class AspNetCorePiper : IPiper
         return adapters;
     }
 
-    private class ValveAdapter<TReq, TRes> : IValve<TReq, TRes> where TReq : IRequest<TRes>
+    private class ValveAdapter<TReq, TRes>(IValve<IRequest<TRes>, TRes> inner) : IValve<TReq, TRes> where TReq : IRequest<TRes>
     {
-        private readonly IValve<IRequest<TRes>, TRes> _inner;
+        private readonly IValve<IRequest<TRes>, TRes> _inner = inner;
 
-        public ValveAdapter(IValve<IRequest<TRes>, TRes> inner)
+        public Task<TRes> Handle(TReq request, RequestHandlerDelegate<TReq, TRes> next, CancellationToken cancellationToken)
         {
-            _inner = inner;
+            Task<TRes> nextDelegate(IRequest<TRes> req, CancellationToken ct) => next((TReq)req, ct);
+            return _inner.Handle(request, nextDelegate, cancellationToken);
         }
-
-        public Task<TRes> Handle(TReq request, RequestHandlerDelegate<TRes> next, CancellationToken cancellationToken)
-            => _inner.Handle(request, next, cancellationToken);
     }
 }

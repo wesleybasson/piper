@@ -13,7 +13,7 @@ public class RequestRoutingTests
         handler.Handle(Arg.Any<RoutingTestQuery>(), Arg.Any<CancellationToken>())
                .Returns(new RoutingTestResponse { ValueOut = 42, MutatedString = "Mutated abc" });
 
-        var piper = new PipelineBuilder()
+        var piper = new PiperBuilder()
            .AddRequestHandler(handler)
            .Build();
 

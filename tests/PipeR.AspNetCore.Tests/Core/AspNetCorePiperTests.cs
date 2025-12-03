@@ -195,12 +195,10 @@ public class TestValve : IValve<IRequest<string>, string>
         _id = id;
     }
 
-    public async Task<string> Handle(IRequest<string> request,
-        RequestHandlerDelegate<string> next,
-        CancellationToken cancellationToken)
+    public async Task<string> Handle(IRequest<string> request, RequestHandlerDelegate<IRequest<string>, string> next, CancellationToken cancellationToken)
     {
         _log.Add("valve_" + _id + "_before");
-        var result = await next();
+        var result = await next(request, cancellationToken);
         _log.Add("valve_" + _id + "_after");
         return result;
     }
@@ -217,13 +215,10 @@ public class TestValve2 : IValve<IRequest<string>, string>
         _id = "2";
     }
 
-    public async Task<string> Handle(
-        IRequest<string> request,
-        RequestHandlerDelegate<string> next,
-        CancellationToken cancellationToken)
+    public async Task<string> Handle(IRequest<string> request, RequestHandlerDelegate<IRequest<string>, string> next, CancellationToken cancellationToken)
     {
         _log.Add("valve_2_before");
-        var result = await next();
+        var result = await next(request, cancellationToken);
         _log.Add("valve_2_after");
         return result;
     }

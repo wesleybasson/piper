@@ -1,20 +1,20 @@
-﻿namespace PipeR.Core.Tests.Core;
-
-using Microsoft.Extensions.DependencyInjection;
-using PipeR.Core.Core;
+﻿using PipeR.Core.Core;
 using System.Reflection;
-using Xunit;
+
+namespace PipeR.Core.Tests.Core;
 
 public class PiperTests
 {
     [Fact]
     public async Task Send_Resolves_Handler_And_ReturnsResponse()
     {
-        var services = new ServiceCollection();
-        services.AddTransient<IRequestHandler<TestRequest, string>, TestRequestHandler>();
-        var provider = services.BuildServiceProvider();
+        var handlers = new Dictionary<(Type, Type), object>
+        {
+            {(typeof(TestRequest), typeof(string)), new TestRequestHandler() }
+        };
+        var valves = new Dictionary<(Type, Type), List<object>>();
 
-        var piper = new Piper(provider);
+        var piper = new Piper(handlers, valves);
         var result = await piper.Send(new TestRequest());
 
         Assert.Equal("handled", result);
@@ -23,11 +23,13 @@ public class PiperTests
     [Fact]
     public async Task Send_Uses_RuntimeRequestType()
     {
-        var services = new ServiceCollection();
-        services.AddTransient<IRequestHandler<DerivedRequest, string>, DerivedRequestHandler>();
-        var provider = services.BuildServiceProvider();
+        var handlers = new Dictionary<(Type, Type), object>
+        {
+            {(typeof(DerivedRequest), typeof(string)), new DerivedRequestHandler() }
+        };
+        var valves = new Dictionary<(Type, Type), List<object>>();
 
-        var piper = new Piper(provider);
+        var piper = new Piper(handlers, valves);
         IRequest<string> req = new DerivedRequest();
         var result = await piper.Send(req);
 
@@ -37,10 +39,10 @@ public class PiperTests
     [Fact]
     public async Task Send_Throws_When_Handler_NotRegistered()
     {
-        var services = new ServiceCollection();
-        var provider = services.BuildServiceProvider();
+        var handlers = new Dictionary<(Type, Type), object>();
+        var valves = new Dictionary<(Type, Type), List<object>>();
 
-        var piper = new Piper(provider);
+        var piper = new Piper(handlers, valves);
 
         await Assert.ThrowsAsync<InvalidOperationException>(async () =>
         {
@@ -51,27 +53,26 @@ public class PiperTests
     [Fact]
     public async Task Send_Populates_HandlerTypeCache()
     {
-        var services = new ServiceCollection();
-        services.AddTransient<IRequestHandler<TestRequest, string>, TestRequestHandler>();
-        var provider = services.BuildServiceProvider();
+        var handlers = new Dictionary<(Type, Type), object>
+        {
+            {(typeof(TestRequest), typeof(string)), new TestRequestHandler() }
+        };
+        var valves = new Dictionary<(Type, Type), List<object>>();
 
-        var piper = new Piper(provider);
+        var piper = new Piper(handlers, valves);
 
-        // Ensure cache is empty first (field is static)
-        var field = typeof(Piper).GetField("HandlerTypeCache", BindingFlags.Static | BindingFlags.NonPublic);
+        // Ensure invokers dictionary is accessible (private instance field)
+        var field = typeof(Piper).GetField("_invokers", BindingFlags.Instance | BindingFlags.NonPublic);
         Assert.NotNull(field);
 
-        // Clear dictionary if needed
-        var dict = field.GetValue(null);
-        // If possible, clear existing entries via reflection
-        var clearMethod = dict?.GetType().GetMethod("Clear");
-        clearMethod?.Invoke(dict, null);
+        dynamic dict = field.GetValue(piper);
+        int initialCount = (int)dict.Count;
+        Assert.Equal(1, initialCount);
 
         await piper.Send(new TestRequest());
         await piper.Send(new TestRequest());
 
-        dynamic d = field.GetValue(null);
-        int count = (int)d.Count;
+        int count = (int)dict.Count;
         Assert.Equal(1, count);
     }
 }

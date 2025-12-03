@@ -1,5 +1,6 @@
 ﻿using BenchmarkDotNet.Running;
 using PipeR.Benchmarks.Pipelines;
+using PipeR.Benchmarks.Pipelines.DelegateCreation;
 
 namespace PipeR.Benchmarks;
 
@@ -10,7 +11,8 @@ internal class Program
         var _ = BenchmarkRunner.Run([
             typeof(HandlerOnlyBench),
             typeof(ValvePipelineBench),
-            typeof(EndToEndHttpBench)
+            typeof(EndToEndHttpBench),
+            typeof(FinalHandlerDelegateBenchmarks)
         ]);
     }
 }

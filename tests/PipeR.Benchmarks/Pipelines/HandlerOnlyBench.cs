@@ -13,7 +13,7 @@ public class HandlerOnlyBench
     [GlobalSetup]
     public void Setup()
     {
-        _piper = new PipelineBuilder()
+        _piper = new PiperBuilder()
             .AddRequestHandler(new TestQueryHandler())
             .Build();
 

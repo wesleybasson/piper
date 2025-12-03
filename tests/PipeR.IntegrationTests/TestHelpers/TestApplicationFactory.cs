@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using PipeR.AspNetCore.Attributes;
 using PipeR.AspNetCore.Extensions;
 using PipeR.Core.Core;
+using PipeR.IntegrationTests.TestHelpers;
 using System.Reflection;
 using System.Text.Json;
 

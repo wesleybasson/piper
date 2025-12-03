@@ -1,17 +1,16 @@
 ﻿using PipeR.Core.Core;
 using PipeR.Core.Middleware;
+using PipeR.IntegrationTests.AspNetCore;
 
-namespace PipeR.IntegrationTests.AspNetCore;
+namespace PipeR.IntegrationTests.TestHelpers;
 
-public class BeforeValve : IValve<IRequest<TestResponse>, TestResponse>
+public class BeforeValve(List<string> tracker) : IValve<IRequest<TestResponse>, TestResponse>
 {
-    private readonly List<string> _tracker;
+    private readonly List<string> _tracker = tracker;
 
-    public BeforeValve(List<string> tracker) => _tracker = tracker;
-
-    public async Task<TestResponse> Handle(IRequest<TestResponse> request, RequestHandlerDelegate<TestResponse> next, CancellationToken cancellationToken)
+    public async Task<TestResponse> Handle(IRequest<TestResponse> request, RequestHandlerDelegate<IRequest<TestResponse>, TestResponse> next, CancellationToken cancellationToken)
     {
         _tracker.Add("before");
-        return await next();
+        return await next(request, cancellationToken);
     }
 }

@@ -1,6 +1,24 @@
 # PipeR.Core
 
-PipeR is a lightweight, bare?bones, publicly available alternative to MediatR. `PipeR.Core` contains the core, framework-agnostic implementation of the in?process mediator used across the repository.
+## PipeR Intro
+
+**PipeR** is a fast, modern, and fully open-source pipeline engine for .NET - designed as a drop-in alternative to commercialized middleware and mediator frameworks.
+Born out of necessity, **PipeR** fills the growing gap left by libraries that have shifted behind paywalls or restrictive licensing.
+Instead of locking critical infrastructure behind subscriptions, **PipeR** gives developers a lightweight, high-performance pipeline model that is free to use in development *and* production, with no limits.
+
+PipeR focuses on:
+
+- Performance-first design - minimal allocations, low overhead, and lean abstractions.
+- Predictable architecture - request/response pipelines, valves (middleware), and handlers that feel familiar yet faster.
+- Flexibility without bloat — simple enough for small projects, powerful enough for enterprise workloads.
+- Full OSS freedom — MIT licensed, transparent, community-driven.
+
+Whether you use `PipeR.Core` in your backend services or `PipeR.Extensions.AspNetCore` for effortless request pipelines in web APIs, the goal is the same:
+a modern pipeline framework that stays open, fast, and in your control.
+
+## PipeR.Core
+
+**PipeR** is a lightweight, bare-bones, publicly available alternative to other mediator frameworks. `PipeR.Core` contains the core, framework-agnostic implementation of the in-process mediator used across the repository.
 
 ## What it is
 - A minimal mediator implementation for sending requests and publishing notifications within a single process.

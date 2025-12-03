@@ -1,6 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using PipeR.Core.Core;
 using PipeR.IntegrationTests.AspNetCore;
+using PipeR.IntegrationTests.TestHelpers;
 using System.Threading.Tasks;
 
 namespace PipeR.Benchmarks.Pipelines;
@@ -17,12 +18,12 @@ public class ValvePipelineBench
         var handler = new TestQueryHandler();
         _query = new TestQuery { ValueIn = 10, OriginalString = "abc" };
 
-        _pipeline1 = new PipelineBuilder()
+        _pipeline1 = new PiperBuilder()
             .AddValve(new LoggingValve())
             .AddRequestHandler(handler)
             .Build();
 
-        _pipeline3 = new PipelineBuilder()
+        _pipeline3 = new PiperBuilder()
             .AddValve(new LoggingValve())
             .AddValve(new ValidationValve())
             .AddValve(new AuthorizationValve())
